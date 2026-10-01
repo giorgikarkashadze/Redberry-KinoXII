@@ -1,17 +1,24 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import FormInput from '@/components/ui/FormInput.vue'
+import { onMounted } from 'vue'
+import { login, fetchMe } from '@/api/auth'
+import { setToken } from '@/api/client'
 
-const a = ref('')
-const b = ref('example@gmail.com')
-const c = ref('abc')
+onMounted(async () => {
+  try {
+    const { token, user } = await login({ email: 'karkash@example.com', password: 'secret' })
+    console.log('logged in', user)
+    setToken(token)
+    console.log('me', await fetchMe())
+  } catch (e) {
+    console.log('login failed', e)
+  }
+
+  try {
+    await login({ email: 'karkash@example.com', password: 'wrongpass' })
+  } catch (e) {
+    console.log('expected error', e)
+  }
+})
 </script>
 
-<template>
-  <div class="max-w-md space-y-5 p-8">
-    <FormInput v-model="a" label="Email" placeholder="example@gmail.com" />
-    <FormInput v-model="b" label="Email" valid />
-    <FormInput v-model="c" label="Password" type="password" error="At least 3 characters" />
-    <FormInput model-value="merisanikidze@gmail.com" label="Email" disabled hint="Set at registration and cannot be changed" />
-  </div>
-</template>
+<template><RouterView /></template>
