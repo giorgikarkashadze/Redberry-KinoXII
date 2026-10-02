@@ -80,7 +80,7 @@ async function submit() {
         {{ formError }}
       </p>
 
-      <Button type="submit" size="lg" class="w-full" :disabled="!filled" :loading="submitting">
+      <Button type="submit" class="w-full" :disabled="!filled" :loading="submitting">
         Log in
       </Button>
     </form>

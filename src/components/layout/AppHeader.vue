@@ -32,7 +32,7 @@ import { useAuthStore } from '@/stores/auth'
 
       <div v-if="!auth.isAuthenticated" class="flex items-center gap-3">
         <Button @click="auth.openModal('register')">Sign up</Button>
-        <Button variant="light" @click="auth.openModal('login')">Log in</Button>
+        <Button variant="secondary" @click="auth.openModal('login')">Log in</Button>
       </div>
     </div>
   </header>
