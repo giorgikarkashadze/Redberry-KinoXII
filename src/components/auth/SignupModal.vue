@@ -100,10 +100,10 @@ async function submit() {
     :closable="!submitting"
     title="Sign up"
     description="Welcome to Kino XII"
-    panel-class="max-w-[520px]"
+    panel-class="max-w-[475px]"
     @update:model-value="onUpdate"
   >
-    <form class="mt-6 space-y-5" novalidate @submit.prevent="submit">
+    <form class="mt-6 flex flex-col gap-6" novalidate @submit.prevent="submit">
       <div>
         <div class="flex items-center gap-4">
           <button

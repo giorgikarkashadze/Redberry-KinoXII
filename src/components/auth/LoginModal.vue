@@ -20,7 +20,6 @@ const { values, filled, formError, error, isValid, validate, validateAll, applyA
     },
   )
 
-// every time the modal opens it starts clean
 watch(isOpen, (open) => {
   if (open) {
     reset()
@@ -38,7 +37,7 @@ async function submit() {
   try {
     await auth.login({ email: values.email.trim(), password: values.password })
   } catch (failure) {
-    applyApiError(failure) // wrong credentials: message inside the modal, fields keep their values
+    applyApiError(failure)
   } finally {
     submitting.value = false
   }
@@ -51,45 +50,45 @@ async function submit() {
     :closable="!submitting"
     title="Log in"
     description="Welcome back to Kino XII"
-    panel-class="max-w-[440px]"
+    panel-class="max-w-[403px]"
     @update:model-value="onUpdate"
   >
-    <form class="mt-6 space-y-5" novalidate @submit.prevent="submit">
-      <FormInput
-        v-model="values.email"
-        label="Email"
-        type="email"
-        autocomplete="email"
-        placeholder="example@gmail.com"
-        :error="error('email')"
-        :valid="isValid('email')"
-        @blur="validate('email')"
-      />
-      <FormInput
-        v-model="values.password"
-        label="Password"
-        type="password"
-        autocomplete="current-password"
-        placeholder="••••••••"
-        :error="error('password')"
-        :valid="isValid('password')"
-        @blur="validate('password')"
-      />
+    <form class="mt-6 flex flex-col gap-8" novalidate @submit.prevent="submit">
+      <div class="flex flex-col gap-6">
+        <FormInput
+          v-model="values.email"
+          label="Email"
+          type="email"
+          autocomplete="email"
+          placeholder="example@gmail.com"
+          :error="error('email')"
+          :valid="isValid('email')"
+          @blur="validate('email')"
+        />
+        <FormInput
+          v-model="values.password"
+          label="Password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="••••••••"
+          :error="error('password')"
+          :valid="isValid('password')"
+          @blur="validate('password')"
+        />
+      </div>
 
-      <p v-if="formError" role="alert" class="rounded-xl bg-accent/10 px-4 py-3 text-sm text-accent">
-        {{ formError }}
-      </p>
-
-      <Button type="submit" class="w-full" :disabled="!filled" :loading="submitting">
-        Log in
-      </Button>
+      <div class="flex flex-col items-center gap-6">
+        <p v-if="formError" role="alert" class="w-full rounded-xl bg-tint-red px-4 py-3 text-xs font-semibold text-accent">
+          {{ formError }}
+        </p>
+        <Button type="submit" class="w-full" :disabled="!filled" :loading="submitting">Log in</Button>
+        <p class="flex items-center gap-1.5 text-sm text-muted">
+          Don't have an account?
+          <button type="button" class="font-extrabold text-accent hover:underline" @click="auth.openModal('register')">
+            Sign up
+          </button>
+        </p>
+      </div>
     </form>
-
-    <p class="mt-5 text-center text-sm text-muted">
-      Don't have an account?
-      <button type="button" class="font-bold text-accent hover:underline" @click="auth.openModal('register')">
-        Sign up
-      </button>
-    </p>
   </Modal>
 </template>

@@ -54,7 +54,7 @@ onBeforeUnmount(cleanup)
 <template>
   <Teleport to="body">
     <Transition name="modal">
-      <div v-if="open" class="fixed inset-0 z-50 overflow-y-auto bg-black/50 backdrop-blur-md">
+      <div v-if="open" class="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-md">
         <div
           class="flex min-h-full items-center justify-center p-4"
           @mousedown.self="close"
@@ -65,23 +65,23 @@ onBeforeUnmount(cleanup)
             aria-modal="true"
             :aria-labelledby="title ? titleId : undefined"
             tabindex="-1"
-            class="relative w-full rounded-3xl border border-border bg-bg p-8 shadow-2xl outline-none"
+            class="relative w-full rounded-[28px] border border-surface-2 bg-bg p-8 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.2)] outline-none"
             :class="panelClass"
           >
             <button
               v-if="closable"
               type="button"
               aria-label="Close"
-              class="absolute right-6 top-6 text-white/80 transition-colors hover:text-white"
+              class="absolute right-8 top-8 text-white transition-opacity hover:opacity-70"
               @click="close"
             >
-              <X class="size-5" />
+              <X class="size-6" />
             </button>
 
             <slot name="header">
-              <header v-if="title" class="pr-8">
-                <h2 :id="titleId" class="text-2xl font-bold">{{ title }}</h2>
-                <p v-if="description" class="mt-1 text-sm text-muted">{{ description }}</p>
+              <header v-if="title" class="pr-10">
+                <h2 :id="titleId" class="text-xl font-extrabold leading-none">{{ title }}</h2>
+                <p v-if="description" class="mt-2 text-xs leading-[1.3] text-muted">{{ description }}</p>
               </header>
             </slot>
 
