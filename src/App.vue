@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/auth'
-const auth = useAuthStore()
+import AppHeader from '@/components/layout/AppHeader.vue'
+import AppFooter from '@/components/layout/AppFooter.vue'
+import AuthModals from '@/components/auth/AuthModals.vue'
 </script>
 
 <template>
-  <div class="space-y-4 p-8">
-    <p>ready: {{ auth.ready }} · user: {{ auth.user?.username ?? 'guest' }}</p>
-    <button
-      class="mr-3 rounded bg-accent px-4 py-2"
-      @click="auth.login({ email: 'karkash@example.com', password: 'secret' })"
-    >
-      Login
-    </button>
-    <button class="rounded bg-surface px-4 py-2" @click="auth.logout()">Logout</button>
+  <div class="relative flex min-h-screen flex-col">
+    <AppHeader />
+    <main class="flex-1">
+      <RouterView />
+    </main>
+    <AppFooter />
   </div>
+  <AuthModals />
 </template>

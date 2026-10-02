@@ -2,6 +2,8 @@
 import { Search } from 'lucide-vue-next'
 import AppLogo from '@/components/layout/AppLogo.vue'
 import Button from '@/components/ui/Button.vue'
+import { useAuthStore } from '@/stores/auth'
+  const auth = useAuthStore()
 </script>
 
 <template>
@@ -28,9 +30,9 @@ import Button from '@/components/ui/Button.vue'
         />
       </div>
 
-      <div class="flex items-center gap-3">
-        <Button>Sign up</Button>
-        <Button variant="light">Log in</Button>
+      <div v-if="!auth.isAuthenticated" class="flex items-center gap-3">
+        <Button @click="auth.openModal('register')">Sign up</Button>
+        <Button variant="light" @click="auth.openModal('login')">Log in</Button>
       </div>
     </div>
   </header>
