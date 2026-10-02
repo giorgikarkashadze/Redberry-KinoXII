@@ -15,6 +15,7 @@
   --color-tint-white: rgb(255 255 255 / 0.1);
   --color-tint-red: rgb(236 48 19 / 0.1);
   --color-tint-green: rgb(74 222 128 / 0.1);
+  --color-tint-warning: rgb(226 126 4 / 0.1);
 
   --text-display: 40px;
 }
