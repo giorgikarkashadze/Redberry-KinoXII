@@ -1,24 +1,17 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { login, fetchMe } from '@/api/auth'
-import { setToken } from '@/api/client'
-
-onMounted(async () => {
-  try {
-    const { token, user } = await login({ email: 'karkash@example.com', password: 'secret' })
-    console.log('logged in', user)
-    setToken(token)
-    console.log('me', await fetchMe())
-  } catch (e) {
-    console.log('login failed', e)
-  }
-
-  try {
-    await login({ email: 'karkash@example.com', password: 'wrongpass' })
-  } catch (e) {
-    console.log('expected error', e)
-  }
-})
+import { useAuthStore } from '@/stores/auth'
+const auth = useAuthStore()
 </script>
 
-<template><RouterView /></template>
+<template>
+  <div class="space-y-4 p-8">
+    <p>ready: {{ auth.ready }} · user: {{ auth.user?.username ?? 'guest' }}</p>
+    <button
+      class="mr-3 rounded bg-accent px-4 py-2"
+      @click="auth.login({ email: 'karkash@example.com', password: 'secret' })"
+    >
+      Login
+    </button>
+    <button class="rounded bg-surface px-4 py-2" @click="auth.logout()">Logout</button>
+  </div>
+</template>
