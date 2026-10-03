@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { watch } from 'vue'
 import { fetchComingSoon } from '@/api/movies'
 import MovieCardMedium from '@/components/home/MovieCardMedium.vue'
 import SectionHeading from '@/components/home/SectionHeading.vue'
@@ -6,13 +7,18 @@ import EmptyState from '@/components/ui/EmptyState.vue'
 import ErrorState from '@/components/ui/ErrorState.vue'
 import Skeleton from '@/components/ui/Skeleton.vue'
 import { useRequest } from '@/composables/useRequest'
+import { useAuthStore } from '@/stores/auth'
 import { ref } from 'vue'
 import { useDragScroll } from '@/composables/useDragScroll'
 
 const row = ref<HTMLElement | null>(null)
 const { dragging } = useDragScroll(row)
 
-const { data, error, loading, run } = useRequest((signal) => fetchComingSoon(signal))
+const auth = useAuthStore()
+const { data, error, loading, run } = useRequest((signal) => fetchComingSoon({ signal }))
+
+watch(() => auth.changes, run)
+
 </script>
 
 <template>

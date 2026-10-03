@@ -66,6 +66,7 @@ export interface Movie {
   releaseDate: string;
   isComingSoon: boolean;
   isFeatured: boolean;
+  isNotified: boolean;
   fromPrice: number;
   ageRating: AgeRating;
   genres: Genre[];

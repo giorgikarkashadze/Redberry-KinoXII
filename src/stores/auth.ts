@@ -30,6 +30,7 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
   const ready = ref(false)
   const modal = ref<AuthModal>(null)
+  const changes = ref(0)
   let token = readStoredToken()
 
   const isAuthenticated = computed(() => user.value !== null)
@@ -44,6 +45,7 @@ export const useAuthStore = defineStore('auth', () => {
     setToken(token)
     writeStoredToken(token)
     modal.value = null
+    changes.value++
     settle?.resolve()
     pendingLogin = null
     settle = null
@@ -106,6 +108,7 @@ export const useAuthStore = defineStore('auth', () => {
       // the token is dropped locally either way
     }
     clearSession()
+    changes.value += 1
   }
 
   function setUser(value: User) {
@@ -116,6 +119,7 @@ export const useAuthStore = defineStore('auth', () => {
     user,
     ready,
     modal,
+    changes,
     isAuthenticated,
     profileComplete,
     init,

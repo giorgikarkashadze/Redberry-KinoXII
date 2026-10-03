@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch  } from 'vue'
 import { Bell, Check } from 'lucide-vue-next'
 import { notifyMovie } from '@/api/movies'
 import Badge from '@/components/ui/Badge.vue'
@@ -9,7 +9,14 @@ import { genreAndRuntime, movieKey, releaseDayLabel } from '@/utils/movie'
 
 const props = defineProps<{ movie: Movie }>()
 
-const status = ref<'idle' | 'loading' | 'done' | 'failed'>('idle')
+const status = ref<'idle' | 'loading' | 'done' | 'failed'>(props.movie.isNotified ? 'done' : 'idle')
+
+watch(
+  () => props.movie.isNotified,
+  (notified) => {
+    status.value = notified ? 'done' : 'idle'
+  },
+)
 
 const label = computed(
   () => ({ idle: 'Notify Me', loading: 'Notify Me', done: 'Reminder set', failed: 'Try again' })[status.value],

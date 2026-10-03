@@ -12,7 +12,9 @@ import { useDragScroll } from '@/composables/useDragScroll'
 const row = ref<HTMLElement | null>(null)
 const { dragging } = useDragScroll(row)
 
-const { data, error, loading, run } = useRequest((signal) => fetchNowPlaying(signal))
+const { data, error, loading, run } = useRequest((signal) =>
+  fetchNowPlaying({ limit: 12, signal }),
+)
 </script>
 
 <template>
