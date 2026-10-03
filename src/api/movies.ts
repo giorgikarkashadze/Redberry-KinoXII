@@ -17,3 +17,7 @@ export async function fetchComingSoon(signal?: AbortSignal) {
   const res = await http.get<ApiResponse<Movie[]>>('/movies/coming-soon', { signal })
   return res.data
 }
+
+export async function notifyMovie(key: string) {
+  await http.post<unknown>(`/movies/${key}/notify`)
+}

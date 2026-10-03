@@ -25,3 +25,8 @@
     @apply bg-bg font-sans text-white antialiased;
   }
 }
+
+@utility scroll-row {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-surface-2) transparent;
+}

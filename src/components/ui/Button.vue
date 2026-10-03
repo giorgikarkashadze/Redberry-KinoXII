@@ -9,12 +9,13 @@ withDefaults(
     type?: 'button' | 'submit'
     loading?: boolean
     disabled?: boolean
+    compact?: boolean
     to?: RouteLocationRaw
   }>(),
-  { variant: 'primary', type: 'button', loading: false, disabled: false },
+  { variant: 'primary', type: 'button', loading: false, disabled: false, compact: false },
 )
 
-const base = 'px-[22px] py-[13px] text-sm font-extrabold disabled:bg-disabled disabled:text-muted'
+const base = 'px-[22px] text-sm font-extrabold disabled:bg-disabled disabled:text-muted'
 const variants: Record<Variant, string> = {
   primary: `${base} bg-accent text-white hover:brightness-110`,
   secondary: `${base} bg-white text-bg hover:bg-white/90`,
@@ -29,7 +30,7 @@ const variants: Record<Variant, string> = {
     :is="to ? RouterLink : 'button'"
     v-bind="to ? { to } : { type, disabled: disabled || loading, 'aria-busy': loading }"
     class="inline-flex items-center justify-center gap-1 rounded-full leading-[normal] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-not-allowed"
-    :class="variants[variant]"
+    :class="[variants[variant], variant !== 'outline' && (compact ? 'py-2.5' : 'py-[13px]')]"
   >
     <span
       v-if="loading"

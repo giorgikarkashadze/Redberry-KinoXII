@@ -79,7 +79,8 @@ async function request<T>(
   }
 
   if (response.ok) {
-    return response.status === 204 ? (undefined as T) : ((await response.json()) as T)
+    const text = await response.text()
+    return (text ? JSON.parse(text) : undefined) as T
   }
 
   const errorBody = (await response.json().catch(() => null)) as Partial<ApiErrorBody> | null
