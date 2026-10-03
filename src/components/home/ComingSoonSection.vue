@@ -6,6 +6,11 @@ import EmptyState from '@/components/ui/EmptyState.vue'
 import ErrorState from '@/components/ui/ErrorState.vue'
 import Skeleton from '@/components/ui/Skeleton.vue'
 import { useRequest } from '@/composables/useRequest'
+import { ref } from 'vue'
+import { useDragScroll } from '@/composables/useDragScroll'
+
+const row = ref<HTMLElement | null>(null)
+const { dragging } = useDragScroll(row)
 
 const { data, error, loading, run } = useRequest((signal) => fetchComingSoon(signal))
 </script>
@@ -17,7 +22,9 @@ const { data, error, loading, run } = useRequest((signal) => fetchComingSoon(sig
     </div>
 
     <div v-if="data?.length" class="relative">
-      <div class="scroll-row flex gap-5 overflow-x-auto px-6 pb-2 lg:px-[70px]">
+      <div ref="row"
+           class="no-scrollbar flex gap-5 overflow-x-auto px-6 pb-1 lg:px-[70px]"
+           :class="dragging ? 'cursor-grabbing select-none' : 'cursor-grab'">
         <MovieCardMedium v-for="movie in data" :key="movie.id" :movie="movie" />
       </div>
       <div

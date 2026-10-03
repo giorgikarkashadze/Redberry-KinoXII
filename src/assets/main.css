@@ -26,7 +26,10 @@
   }
 }
 
-@utility scroll-row {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-surface-2) transparent;
+@utility no-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
