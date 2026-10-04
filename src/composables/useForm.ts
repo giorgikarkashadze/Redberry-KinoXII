@@ -46,6 +46,9 @@ export function useForm<T extends Record<string, string>>(initial: T, rules: Rul
   const error = (name: Name) => serverErrors[name] ?? clientErrors[name] ?? null
   const isValid = (name: Name) => !!touched[name] && !error(name) && valueOf(name) !== ''
   const filled = computed(() => names.every((name) => valueOf(name).trim() !== ''))
+  const valid = computed(() =>
+    names.every((name) => (rules[name] ?? []).every((rule) => rule(valueOf(name), values) === null)),
+  )
 
   watch(
     () => ({ ...values }),
@@ -90,5 +93,5 @@ export function useForm<T extends Record<string, string>>(initial: T, rules: Rul
     formError.value = null
   }
 
-  return { values, filled, formError, error, isValid, validate, validateAll, applyApiError, reset }
+  return { values, filled, formError, valid, error, isValid, validate, validateAll, applyApiError, reset }
 }

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { watch } from 'vue'
 import Button from '@/components/ui/Button.vue'
 import FormInput from '@/components/ui/FormInput.vue'
 import { useForm } from '@/composables/useForm'
@@ -9,6 +8,7 @@ import { formatShortDate } from '@/utils/dates'
 import { formatCardNumber, formatCvv, formatExpiry, formatMobile } from '@/utils/format'
 import { formatMoney } from '@/utils/movie'
 import { ticketSummary } from '@/utils/order'
+import { useFormatted } from '@/composables/useFormatted'
 import {
   cardNumber,
   cvv,
@@ -41,17 +41,11 @@ const { values, formError, error, isValid, validate, validateAll, applyApiError 
   },
 )
 
-function keepFormatted(read: () => string, write: (value: string) => void, format: (value: string) => string) {
-  watch(read, (value) => {
-    const next = format(value)
-    if (next !== value) write(next)
-  })
-}
 
-keepFormatted(() => values.cardNumber, (value) => (values.cardNumber = value), formatCardNumber)
-keepFormatted(() => values.expiry, (value) => (values.expiry = value), formatExpiry)
-keepFormatted(() => values.cvv, (value) => (values.cvv = value), formatCvv)
-keepFormatted(() => values.mobileNumber, (value) => (values.mobileNumber = value), formatMobile)
+useFormatted(() => values.cardNumber, (value) => (values.cardNumber = value), formatCardNumber)
+useFormatted(() => values.expiry, (value) => (values.expiry = value), formatExpiry)
+useFormatted(() => values.cvv, (value) => (values.cvv = value), formatCvv)
+useFormatted(() => values.mobileNumber, (value) => (values.mobileNumber = value), formatMobile)
 
 async function submit() {
   if (booking.busy || !validateAll()) return

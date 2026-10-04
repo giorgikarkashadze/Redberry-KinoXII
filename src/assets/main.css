@@ -24,6 +24,10 @@
   body {
     @apply bg-bg font-sans text-white antialiased;
   }
+  input[type='date'],
+  select {
+    color-scheme: dark;
+  }
 }
 
 @utility no-scrollbar {

@@ -43,3 +43,11 @@ export function formatWeekdayDate(iso: string) {
   const month = date.toLocaleDateString('en-GB', { month: 'long', timeZone: 'UTC' })
   return `${weekday} ${date.getUTCDate()} ${month}`
 }
+
+export function refundCutoffLabel(date: string, time: string, hours = 2) {
+  const cutoff = new Date(new Date(`${date}T${time}:00Z`).getTime() - hours * 60 * 60 * 1000)
+  const clock = cutoff.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' })
+  const weekday = cutoff.toLocaleDateString('en-GB', { weekday: 'short', timeZone: 'UTC' })
+  const month = cutoff.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' })
+  return `${clock}, ${weekday} ${cutoff.getUTCDate()} ${month}`
+}

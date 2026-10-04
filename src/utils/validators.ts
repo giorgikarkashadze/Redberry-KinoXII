@@ -9,9 +9,14 @@ export const required =
     value.trim() ? null : `${label} is required`
 
 export const minLength =
-  (min: number): Rule =>
+  (min: number, message?: string): Rule =>
   (value) =>
-    value.length >= min ? null : `At least ${min} characters`
+    value.length >= min ? null : (message ?? `At least ${min} characters`)
+
+export const maxLength =
+  (max: number, message?: string): Rule =>
+  (value) =>
+    value.length <= max ? null : (message ?? `At most ${max} characters`)
 
 export const email = (): Rule => (value) =>
   EMAIL_PATTERN.test(value.trim()) ? null : 'Enter a valid email address'
@@ -21,11 +26,28 @@ export const matches =
   (value, values) =>
     value === values[otherField] ? null : message
 
-  export const georgianMobile = (): Rule => (value) => {
+export const georgianMobile = (): Rule => (value) => {
   const digits = withoutSpaces(value)
-  if (!/^\d{9}$/.test(digits)) return 'Mobile number must be 9 digits'
-  return digits.startsWith('5') ? null : 'Georgian mobile numbers must start with 5'
+  if (/\D/.test(digits)) return 'Please enter a valid Georgian mobile number (9 digits starting with 5)'
+  if (!digits.startsWith('5')) return 'Georgian mobile numbers must start with 5'
+  return digits.length === 9 ? null : 'Mobile number must be exactly 9 digits'
 }
+
+export const dateOfBirth =
+  (minAge = 12): Rule =>
+  (value) => {
+    const born = new Date(`${value}T00:00:00`)
+    const today = new Date()
+    if (Number.isNaN(born.getTime()) || born > today || born.getFullYear() < 1900) {
+      return 'Please enter a valid date of birth'
+    }
+    let age = today.getFullYear() - born.getFullYear()
+    const hadBirthday =
+      today.getMonth() > born.getMonth() ||
+      (today.getMonth() === born.getMonth() && today.getDate() >= born.getDate())
+    if (!hadBirthday) age -= 1
+    return age >= minAge ? null : `You must be at least ${minAge} years old to create an account`
+  }
 
 export const cardNumber = (): Rule => (value) =>
   /^\d{16}$/.test(withoutSpaces(value)) ? null : 'Card number must be 16 digits'
