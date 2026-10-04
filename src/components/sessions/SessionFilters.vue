@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {watch} from 'vue'
 import CheckboxRow from '@/components/ui/CheckboxRow.vue'
 import Button from '@/components/ui/Button.vue'
 import DayPicker from '@/components/sessions/DayPicker.vue'
@@ -8,7 +9,7 @@ import type { Format, FilterOptions } from '@/types/api'
 import type { DayOption } from '@/utils/dates'
 import { splitLabel } from '@/utils/text'
 
-defineProps<{
+const props = defineProps<{
   options: FilterOptions
   filters: SessionFilters
   availableFormats: Format[]
@@ -22,6 +23,16 @@ const emit = defineEmits<{
   selectDate: [iso: string]
   clear: []
 }>()
+
+watch(
+  () => props.selectedDate,
+  (newDate) => {
+    if (!props.days.some((day) => day.iso === newDate)) {
+      emit('selectDate', props.days[0]?.iso ?? '')
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -42,7 +53,7 @@ const emit = defineEmits<{
     <div class="h-px bg-surface-2" />
 
     <FilterGroup title="Date">
-      <DayPicker :days="days" :selected="selectedDate" @select="emit('selectDate', $event)" />
+      <DayPicker :days="days" :selected="selectedDate" />
     </FilterGroup>
 
     <div class="h-px bg-surface-2" />

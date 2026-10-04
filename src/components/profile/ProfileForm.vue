@@ -36,7 +36,7 @@ const { values, formError, error, isValid, validate, validateAll, valid, applyAp
     fullName: [
       required('Name'),
       minLength(3, 'Name must be at least 3 characters'),
-      maxLength(50, 'Name must not exceed 50 characters'),
+      maxLength(30, 'Name must not exceed 30 characters'),
     ],
     mobileNumber: [required('Mobile number'), georgianMobile()],
     dateOfBirth: [required('Date of birth'), dateOfBirth()],
