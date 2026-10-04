@@ -20,7 +20,8 @@ export class ApiError extends Error {
   }
 }
 
-type Query = Record<string, string | number | boolean | null | undefined>
+type QueryValue = string | number | boolean | null | undefined | string[]
+type Query = Record<string, QueryValue>
 type Method = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
 interface RequestOptions {
@@ -43,7 +44,9 @@ export function setUnauthorizedHandler(handler: (() => Promise<void>) | null) {
 function buildUrl(path: string, query?: Query) {
   const url = new URL(BASE_URL + path)
   for (const [key, value] of Object.entries(query ?? {})) {
-    if (value !== undefined && value !== null && value !== '') {
+    if (Array.isArray(value)) {
+      for (const item of value) url.searchParams.append(`${key}[]`, item)
+    } else if (value !== undefined && value !== null && value !== '') {
       url.searchParams.set(key, String(value))
     }
   }

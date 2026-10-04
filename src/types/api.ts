@@ -17,6 +17,7 @@ export interface Language {
   id: number;
   slug: string;
   name: string;
+  code: string;
 }
 
 export interface Genre {
@@ -208,4 +209,40 @@ export interface AuthPayload {
 export interface ApiErrorBody {
   message: string;
   errors?: Record<string, string[]>;
+}
+
+export interface TimeBandOption {
+  id: string;
+  label: string;
+}
+
+export interface SortOption {
+  id: string;
+  label: string;
+}
+
+export interface FilterOptions {
+  venues: Venue[];
+  formats: Format[];
+  languages: Language[];
+  timeBands: TimeBandOption[];
+  sorts: SortOption[];
+  ticketTypes: TicketType[];
+  ageRatings: AgeRating[];
+  maxSeatsPerOrder: number;
+  holdMinutes: number;
+}
+
+export interface SessionGroup {
+  movie: Movie;
+  sessions: Session[];
+}
+
+export interface SessionsMeta {
+  currentPage: number;
+  lastPage: number;
+  perPage: number;
+  totalSessions: number;
+  totalMovies: number;
+  date: string;
 }
