@@ -1,5 +1,5 @@
 import { http } from '@/api/client'
-import type { ApiResponse, Movie, MovieDetail } from '@/types/api'
+import type { ApiResponse, Movie, MovieDetail, VenueSessions } from '@/types/api'
 
 export type FeaturedMovie = Movie & Partial<Pick<MovieDetail, 'synopsis'>>
 
@@ -34,4 +34,22 @@ export async function notifyMovie(key: string) {
     `/movies/${key}/notify`,
   )
   return res.data
+}
+
+export async function fetchMovie(key: string, signal?: AbortSignal) {
+  const res = await http.get<ApiResponse<MovieDetail>>(`/movies/${key}`, { signal })
+  return res.data
+}
+
+export async function fetchMovieSessions(key: string, dates: string[], signal?: AbortSignal) {
+  const entries = await Promise.all(
+    dates.map(async (date) => {
+      const res = await http.get<ApiResponse<VenueSessions[]>>(`/movies/${key}/sessions`, {
+        query: { date },
+        signal,
+      })
+      return [date, res.data] as const
+    }),
+  )
+  return Object.fromEntries(entries) as Record<string, VenueSessions[]>
 }

@@ -7,6 +7,7 @@ export class ApiError extends Error {
     public status: number,
     message: string,
     public errors?: Record<string, string[]>,
+    public contested?: string[],
   ) {
     super(message)
   }
@@ -17,6 +18,10 @@ export class ApiError extends Error {
 
   get isRuleError() {
     return this.status === 422 && !this.errors
+  }
+
+  get isConflict() {
+    return this.status === 409
   }
 }
 
@@ -91,6 +96,7 @@ async function request<T>(
     response.status,
     errorBody?.message ?? 'Something went wrong. Please try again.',
     errorBody?.errors,
+    errorBody?.contested,
   )
 
   if (response.status === 401 && replayOn401 && !isReplay && unauthorizedHandler) {

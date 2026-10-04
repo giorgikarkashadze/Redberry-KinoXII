@@ -209,6 +209,7 @@ export interface AuthPayload {
 export interface ApiErrorBody {
   message: string;
   errors?: Record<string, string[]>;
+  contested?: string[];
 }
 
 export interface TimeBandOption {
@@ -245,4 +246,11 @@ export interface SessionsMeta {
   totalSessions: number;
   totalMovies: number;
   date: string;
+}
+
+export type SessionSummary = Omit<Session, "movie">;
+
+export interface VenueSessions {
+  venue: Omit<Venue, "formats">;
+  sessions: SessionSummary[];
 }

@@ -115,6 +115,10 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = value
   }
 
+  function ensureAuthenticated() {
+    return isAuthenticated.value ? Promise.resolve() : requestLogin()
+  }
+
   return {
     user,
     ready,
@@ -130,5 +134,6 @@ export const useAuthStore = defineStore('auth', () => {
     closeModal,
     requestLogin,
     setUser,
+    ensureAuthenticated,
   }
 })

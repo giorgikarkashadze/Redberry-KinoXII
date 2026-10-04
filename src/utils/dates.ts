@@ -20,3 +20,26 @@ export function buildDays(count = 7, from = new Date()): DayOption[] {
     }
   })
 }
+
+export function formatLongDate(iso: string) {
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
+}
+
+export function formatShortDate(iso: string) {
+  const date = new Date(iso)
+  const weekday = date.toLocaleDateString('en-GB', { weekday: 'short', timeZone: 'UTC' })
+  const month = date.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' })
+  return `${weekday} ${date.getUTCDate()} ${month}`
+}
+
+export function formatWeekdayDate(iso: string) {
+  const date = new Date(iso)
+  const weekday = date.toLocaleDateString('en-GB', { weekday: 'long', timeZone: 'UTC' })
+  const month = date.toLocaleDateString('en-GB', { month: 'long', timeZone: 'UTC' })
+  return `${weekday} ${date.getUTCDate()} ${month}`
+}

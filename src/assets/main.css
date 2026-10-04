@@ -33,3 +33,11 @@
     display: none;
   }
 }
+
+@utility stripes {
+  background-image: repeating-linear-gradient(
+    135deg,
+    var(--color-surface-2) 0 4px,
+    var(--color-surface) 4px 8px
+  );
+}

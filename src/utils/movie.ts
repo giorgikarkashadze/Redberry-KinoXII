@@ -19,3 +19,7 @@ export function releaseDayLabel(releaseDate: string) {
   const month = date.toLocaleString('en-GB', { month: 'long', timeZone: 'UTC' }).toUpperCase()
   return `${date.getUTCDate()} ${month}`
 }
+
+export function formatMoney(value: number) {
+  return `₾${Number(value.toFixed(2))}`
+}

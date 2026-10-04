@@ -2,6 +2,8 @@
 import AppHeader from '@/components/layout/AppHeader.vue'
 import AppFooter from '@/components/layout/AppFooter.vue'
 import AuthModals from '@/components/auth/AuthModals.vue'
+import BookingModal from '@/components/booking/BookingModal.vue'
+import ProfileRequiredModal from '@/components/booking/ProfileRequiredModal.vue'
 </script>
 
 <template>
@@ -13,4 +15,6 @@ import AuthModals from '@/components/auth/AuthModals.vue'
     <AppFooter />
   </div>
   <AuthModals />
+  <BookingModal />
+  <ProfileRequiredModal />
 </template>

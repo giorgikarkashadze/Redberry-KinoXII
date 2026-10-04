@@ -13,12 +13,17 @@ import { useRequest } from '@/composables/useRequest'
 import { useSessionFilters } from '@/composables/useSessionFilters'
 import { useFilterOptionsStore } from '@/stores/filterOptions'
 import { buildDays } from '@/utils/dates'
+import { toBookingTarget, useBookingStore } from '@/stores/booking'
+import type { Session } from '@/types/api'
 
 const filterOptions = useFilterOptionsStore()
 const { filters, availableFormats, activeCount, apiQuery, update, toggle, clear } = useSessionFilters()
+const booking = useBookingStore()
 
 const days = buildDays()
-const selectedDate = computed(() => filters.value.date ?? days[0]?.iso ?? '')
+const selectedDate = computed(
+  () => filters.value.date ?? result.value?.meta.date ?? days[0]?.iso ?? '',
+)
 const sortValue = computed(
   () => filters.value.sort ?? filterOptions.options?.sorts[0]?.id ?? 'time_asc',
 )
@@ -34,6 +39,10 @@ onMounted(() => {
   filterOptions.load()
 })
 
+function onSelect(session: Session) {
+  booking.start(toBookingTarget(session, session.movie))
+}
+
 watch(
   () => JSON.stringify(apiQuery.value),
   () => run(),
@@ -43,6 +52,12 @@ watch(
   () => filters.value.page,
   () => window.scrollTo({ top: 0, behavior: 'smooth' }),
 )
+
+watch(
+  () => booking.completedCount,
+  () => run(),
+)
+
 </script>
 
 <template>
@@ -124,7 +139,7 @@ watch(
             :key="group.movie.id"
             class="border-t border-tint-white pt-8 first:border-t-0 first:pt-0"
           >
-            <SessionGroup :group="group" />
+            <SessionGroup :group="group" @select="onSelect" />
           </div>
 
           <Pagination
