@@ -53,3 +53,8 @@ export async function fetchMovieSessions(key: string, dates: string[], signal?: 
   )
   return Object.fromEntries(entries) as Record<string, VenueSessions[]>
 }
+
+export async function searchMovies(term: string, signal?: AbortSignal) {
+  const res = await http.get<ApiResponse<Movie[]>>('/search', { query: { q: term }, signal })
+  return res.data
+}

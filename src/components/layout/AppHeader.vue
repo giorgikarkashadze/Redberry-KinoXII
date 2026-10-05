@@ -3,7 +3,9 @@ import { Search } from 'lucide-vue-next'
 import AppLogo from '@/components/layout/AppLogo.vue'
 import UserMenu from '@/components/layout/UserMenu.vue'
 import Button from '@/components/ui/Button.vue'
+import SearchBar from '@/components/search/SearchBar.vue'
 import { useAuthStore } from '@/stores/auth'
+
 
 const auth = useAuthStore()
 </script>
@@ -22,14 +24,7 @@ const auth = useAuthStore()
       </div>
 
       <div class="flex items-center gap-8">
-        <div class="flex h-[41px] w-[380px] items-center gap-1 rounded-full bg-tint-white px-3 py-1.5">
-          <Search class="size-3.5 shrink-0" />
-          <input
-            type="text"
-            placeholder="Search films and live events"
-            class="min-w-0 flex-1 bg-transparent text-sm leading-[1.3] text-white outline-none placeholder:text-white"
-          />
-        </div>
+        <SearchBar />
 
         <div v-if="!auth.ready" class="h-10 w-[120px]" aria-hidden="true" />
         <UserMenu v-else-if="auth.isAuthenticated" />
