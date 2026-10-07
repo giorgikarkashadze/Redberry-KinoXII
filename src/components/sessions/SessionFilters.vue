@@ -24,15 +24,6 @@ const emit = defineEmits<{
   clear: []
 }>()
 
-watch(
-  () => props.selectedDate,
-  (newDate) => {
-    if (!props.days.some((day) => day.iso === newDate)) {
-      emit('selectDate', props.days[0]?.iso ?? '')
-    }
-  },
-  { immediate: true },
-)
 </script>
 
 <template>
@@ -53,7 +44,7 @@ watch(
     <div class="h-px bg-surface-2" />
 
     <FilterGroup title="Date">
-      <DayPicker :days="days" :selected="selectedDate" />
+      <DayPicker :days="days" :selected="selectedDate" @select="emit('selectDate', $event)" />
     </FilterGroup>
 
     <div class="h-px bg-surface-2" />

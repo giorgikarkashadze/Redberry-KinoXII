@@ -92,7 +92,7 @@ function onFocusOut(event: FocusEvent) {
         :aria-expanded="open"
         :aria-controls="listId"
         :aria-activedescendant="activeId"
-        class="min-w-0 flex-1 bg-transparent text-sm leading-[1.3] text-white outline-none placeholder:text-white"
+        class="min-w-0 flex-1 bg-transparent text-sm leading-[1.3] text-white outline-none placeholder:text-white focus:placeholder:text-gray-400"
         @focus="open = true"
         @input="open = true"
         @keydown="onKeydown"

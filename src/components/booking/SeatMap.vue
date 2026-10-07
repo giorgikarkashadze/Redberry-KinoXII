@@ -22,7 +22,7 @@ function seatClass(seat: Seat, selected: boolean) {
 <template>
   <div class="flex flex-col gap-6">
     <div
-      class="rounded-lg bg-surface-2 py-2 text-center text-[10px] font-semibold uppercase leading-none tracking-[0.1em] text-muted"
+      class="rounded-b-lg bg-surface-2 py-2 text-center text-[10px] font-semibold uppercase leading-none tracking-[0.1em] text-muted"
     >
       Screen
     </div>

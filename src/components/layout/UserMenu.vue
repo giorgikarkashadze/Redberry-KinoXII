@@ -91,7 +91,7 @@ const itemClass =
       <div class="mt-1 flex flex-col gap-1">
         <div class="flex flex-col gap-0.5 pt-1">
           <RouterLink :to="{ name: 'profile' }" role="menuitem" :class="itemClass" @click="open = false">
-            <UserIcon class="size-4" />
+            <img src="/Profile.png" class="size-3" />
             My Profile
           </RouterLink>
           <RouterLink
@@ -100,7 +100,7 @@ const itemClass =
             :class="itemClass"
             @click="open = false"
           >
-            <Ticket class="size-4" />
+            <img src="/Ticket.png" class="size-4" />
             My Tickets
           </RouterLink>
         </div>
@@ -108,7 +108,7 @@ const itemClass =
         <div class="h-px w-full bg-tint-white" />
 
         <button type="button" role="menuitem" :class="[itemClass, 'text-accent']" @click="logout">
-          <LogOut class="size-4" />
+          <img src="/Logout.png" class="size-4" />
           Log out
         </button>
       </div>
